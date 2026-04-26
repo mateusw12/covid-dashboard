@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import { apiFetch } from "@/lib/api";
 import {
   VaccineCountryCoverage,
@@ -7,25 +9,34 @@ import {
 
 export class VaccineService {
   private static readonly defaultDays = 60;
+  private static readonly defaultRevalidate = 300;
+
+  private static readonly getCountriesCoverageCached = cache(async (lastDays: number): Promise<VaccineCountryCoverage[]> => {
+    return apiFetch<VaccineCountryCoverage[]>("vaccine/coverage/countries", {
+      query: { lastdays: lastDays, fullData: false },
+      revalidate: VaccineService.defaultRevalidate,
+    });
+  });
+
+  private static readonly getCountryCoverageCached = cache(async (country: string, lastDays: number): Promise<VaccineCountryCoverage> => {
+    return apiFetch<VaccineCountryCoverage>(
+      `vaccine/coverage/countries/${encodeURIComponent(country)}`,
+      {
+        query: { lastdays: lastDays, fullData: false },
+        revalidate: VaccineService.defaultRevalidate,
+      },
+    );
+  });
 
   static async getCountriesCoverage(lastDays = this.defaultDays): Promise<VaccineCountryCoverage[]> {
-    return apiFetch<VaccineCountryCoverage[]>("vaccine/coverage/countries", {
-      query: { lastdays: this.normalizeDays(lastDays), fullData: false },
-      revalidate: 300,
-    });
+    return this.getCountriesCoverageCached(this.normalizeDays(lastDays));
   }
 
   static async getCountryCoverage(
     country: string,
     lastDays = this.defaultDays,
   ): Promise<VaccineCountryCoverage> {
-    return apiFetch<VaccineCountryCoverage>(
-      `vaccine/coverage/countries/${encodeURIComponent(country)}`,
-      {
-        query: { lastdays: this.normalizeDays(lastDays), fullData: false },
-        revalidate: 300,
-      },
-    );
+    return this.getCountryCoverageCached(country, this.normalizeDays(lastDays));
   }
 
   static buildSeriesFromCoverage(coverage: VaccineCountryCoverage): VaccineCountrySeriesPoint[] {

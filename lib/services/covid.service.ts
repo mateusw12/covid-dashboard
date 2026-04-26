@@ -8,7 +8,8 @@ import { MetricType } from "@/lib/enum/metric-type.enum";
 import { getMetricValue } from "@/lib/utils";
 
 export class CovidService {
-  private static readonly defaultRevalidate = 60;
+  private static readonly defaultRevalidate = 120;
+  private static readonly historicalRevalidate = 600;
 
   static async getGlobalData(interval: IntervalType = IntervalType.Today): Promise<GlobalData> {
     return apiFetch<GlobalData>("all", {
@@ -48,7 +49,7 @@ export class CovidService {
   ): Promise<GlobalHistoricalData> {
     return apiFetch<GlobalHistoricalData>("historical/all", {
       query: { lastdays: lastDays },
-      revalidate: this.defaultRevalidate,
+      revalidate: this.historicalRevalidate,
     });
   }
 

@@ -27,15 +27,11 @@ function getInitialTheme(): Theme {
 
 export default function ThemeToggle() {
   const { t } = useI18n();
-  const [theme, setTheme] = useState<Theme>("light");
-  const [isReady, setIsReady] = useState(false);
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
   useEffect(() => {
-    const initialTheme = getInitialTheme();
-    setTheme(initialTheme);
-    applyTheme(initialTheme);
-    setIsReady(true);
-  }, []);
+    applyTheme(theme);
+  }, [theme]);
 
   const handleToggleTheme = () => {
     const nextTheme = theme === "dark" ? "light" : "dark";
@@ -50,11 +46,7 @@ export default function ThemeToggle() {
       onClick={handleToggleTheme}
       aria-label={t("dashboardLayout", "theme.toggleAria", "Toggle theme")}
     >
-      {!isReady
-        ? t("dashboardLayout", "theme.loading", "Theme")
-        : theme === "dark"
-          ? t("dashboardLayout", "theme.lightMode", "Light Mode")
-          : t("dashboardLayout", "theme.darkMode", "Dark Mode")}
+      {t("dashboardLayout", "theme.loading", "Theme")}
     </ToggleButton>
   );
 }

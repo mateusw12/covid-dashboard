@@ -94,7 +94,9 @@ export default function LanguageSwitcher() {
     }
 
     startTransition(() => {
-      router.replace(swapLocaleInPath(pathname, locale), { scroll: false });
+      const nextPathname = swapLocaleInPath(pathname, locale);
+      const query = typeof window !== "undefined" ? window.location.search.slice(1) : "";
+      router.replace(query ? `${nextPathname}?${query}` : nextPathname, { scroll: false });
     });
     setIsOpen(false);
   };

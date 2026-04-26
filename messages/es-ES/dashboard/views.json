@@ -27,6 +27,9 @@
   "stats.today": "hoy",
   "stats.noDailyDelta": "Sin variación diaria",
   "stats.updatedAt": "Actualizado en",
+  "stats.scope.country": "Pais",
+  "stats.scope.global": "Alcance global",
+  "stats.scope.snapshot": "Instantanea",
   "export.excel": "Exportar Excel",
   "export.png": "PNG",
   "export.svg": "SVG"

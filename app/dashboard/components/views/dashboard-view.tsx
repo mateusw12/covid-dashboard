@@ -68,7 +68,13 @@ export default function DashboardView({
 
       <Filters continents={continentsOptions} countries={countryOptions} current={filters} />
 
-      <StatsCards data={globalData} />
+      <StatsCards
+        data={globalData}
+        selectedCountry={filters.country}
+        startDate={filters.startDate}
+        endDate={filters.endDate}
+        resolvedInterval={filters.interval}
+      />
 
       <ChartsGrid>
         <ChartsPanel

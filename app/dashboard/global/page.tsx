@@ -22,16 +22,19 @@ function getMetricLabel(filters: DashboardFilters) {
 export default async function GlobalPage({ searchParams }: GlobalPageProps) {
   const rawSearchParams = await searchParams;
   const filters = parseDashboardFilters(rawSearchParams);
+  const hasCountryFilter = Boolean(filters.country);
   const shouldUseHistoricalTrend = Boolean(filters.startDate && filters.endDate);
 
-  const [globalData, continentsData, countriesData, historicalData] = await Promise.all([
+  const [globalData, continentsData, countriesData, historicalData, countryData] = await Promise.all([
     CovidService.getGlobalData(filters.interval),
     CovidService.getContinentsData(filters.interval),
     CovidService.getCountriesData(filters.interval),
     shouldUseHistoricalTrend ? CovidService.getGlobalHistoricalData("all") : Promise.resolve(null),
+    hasCountryFilter ? CovidService.getCountryData(filters.country, filters.interval) : Promise.resolve(null),
   ]);
 
-  const metricValue = getMetricValue(globalData, filters.metric);
+  const focusedSource = countryData ?? globalData;
+  const metricValue = getMetricValue(focusedSource, filters.metric);
   const dailyMetricField =
     filters.metric === MetricType.Cases
       ? "todayCases"
@@ -48,7 +51,7 @@ export default async function GlobalPage({ searchParams }: GlobalPageProps) {
 
   const trendDataFromSnapshot = buildTrendSeries(
     metricValue,
-    getMetricValue(globalData, dailyMetricField),
+    getMetricValue(focusedSource, dailyMetricField),
   );
 
   const trendData =
@@ -72,7 +75,7 @@ export default async function GlobalPage({ searchParams }: GlobalPageProps) {
 
   return (
     <GlobalDashboardView
-      globalData={globalData}
+      globalData={focusedSource}
       trendData={safeTrendData}
       topCountries={topCountries}
       continentDistribution={continentDistribution}
@@ -80,6 +83,7 @@ export default async function GlobalPage({ searchParams }: GlobalPageProps) {
       endDate={filters.endDate}
       resolvedInterval={filters.interval}
       metricLabel={getMetricLabel(filters)}
+      selectedCountry={filters.country}
     />
   );
 }

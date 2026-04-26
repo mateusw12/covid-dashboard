@@ -24,10 +24,19 @@ interface BarItem {
 interface BarChartProps {
   data: BarItem[];
   metricLabel: string;
+  onCountryClick?: (country: string) => void;
 }
 
-export default function BarChart({ data, metricLabel }: BarChartProps) {
+export default function BarChart({ data, metricLabel, onCountryClick }: BarChartProps) {
   const chartRef = useRef<HTMLElement | null>(null);
+
+  const handleBarClick = (entry: { name?: string; payload?: { name?: string } }) => {
+    const countryName = entry?.name ?? entry?.payload?.name;
+
+    if (countryName && onCountryClick) {
+      onCountryClick(countryName);
+    }
+  };
 
   return (
     <ChartCard ref={chartRef}>
@@ -58,7 +67,13 @@ export default function BarChart({ data, metricLabel }: BarChartProps) {
                 return formatCompactNumber(numericValue);
               }}
             />
-            <Bar dataKey="value" fill="var(--primary)" radius={[6, 6, 0, 0]} />
+            <Bar
+              dataKey="value"
+              fill="var(--primary)"
+              radius={[6, 6, 0, 0]}
+              cursor={onCountryClick ? "pointer" : "default"}
+              onClick={handleBarClick}
+            />
           </RechartsBarChart>
         </ResponsiveContainer>
       </ChartBody>

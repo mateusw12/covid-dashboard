@@ -6,6 +6,12 @@ export const CardsGrid = styled.section`
   gap: 1rem;
 `;
 
+export const FilterScope = styled.p`
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+`;
+
 export const Card = styled.article<{ tone: string }>`
   background: linear-gradient(160deg, var(--card), color-mix(in srgb, var(--card) 70%, black));
   border: 1px solid color-mix(in srgb, var(--border) 75%, ${({ tone }) => tone});

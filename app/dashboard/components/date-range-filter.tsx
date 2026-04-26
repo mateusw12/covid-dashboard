@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { FormEvent, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { IntervalType } from "@/lib/enum/interval-type.enum";
@@ -31,10 +31,12 @@ export default function DateRangeFilter({
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
-  const [from, setFrom] = useState(startDate);
-  const [to, setTo] = useState(endDate);
+  const handleApply = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-  const handleApply = () => {
+    const formData = new FormData(event.currentTarget);
+    const from = String(formData.get("startDate") ?? "");
+    const to = String(formData.get("endDate") ?? "");
     const params = new URLSearchParams(searchParams.toString());
 
     if (from) {
@@ -65,24 +67,23 @@ export default function DateRangeFilter({
         : "today";
 
   return (
-    <DateFilterBar>
+    <DateFilterBar onSubmit={handleApply}>
       <DateField>
         <DateLabel>Start Date</DateLabel>
-        <DateInput type="date" value={from} onChange={(event) => setFrom(event.target.value)} />
+        <DateInput name="startDate" type="date" defaultValue={startDate} />
       </DateField>
 
       <DateField>
         <DateLabel>End Date</DateLabel>
-        <DateInput type="date" value={to} onChange={(event) => setTo(event.target.value)} />
+        <DateInput name="endDate" type="date" defaultValue={endDate} />
       </DateField>
 
-      <ApplyButton type="button" onClick={handleApply} disabled={isPending}>
+      <ApplyButton type="submit" disabled={isPending}>
         {isPending ? "Applying..." : "Apply Date Filter"}
       </ApplyButton>
 
-      <DateStatus>
-        Snapshot source resolved as {intervalLabel} based on end date (disease.sh endpoints).
-      </DateStatus>
+      <DateStatus>Snapshot resolved as {intervalLabel}.</DateStatus>
+
     </DateFilterBar>
   );
 }

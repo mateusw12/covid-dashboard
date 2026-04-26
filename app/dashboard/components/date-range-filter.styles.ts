@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const DateFilterBar = styled.section`
+export const DateFilterBar = styled.form`
   display: grid;
   gap: 0.8rem;
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));

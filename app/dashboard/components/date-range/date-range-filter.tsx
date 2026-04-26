@@ -64,10 +64,10 @@ export default function DateRangeFilter({
 
   const intervalLabel =
     resolvedInterval === IntervalType.TwoDaysAgo
-      ? "two days ago"
+      ? t("dateRange", "interval.twoDaysAgo", "two days ago")
       : resolvedInterval === IntervalType.Yesterday
-        ? "yesterday"
-        : "today";
+        ? t("dateRange", "interval.yesterday", "yesterday")
+        : t("dateRange", "interval.today", "today");
 
   return (
     <DateFilterBar onSubmit={handleApply}>

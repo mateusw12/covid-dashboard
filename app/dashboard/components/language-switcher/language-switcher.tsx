@@ -6,6 +6,7 @@ import { useEffect, useRef, useState, useTransition } from "react";
 
 import { LanguageLocaleEnum } from "@/lib/enum/language-locale.enum";
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES, type AppLocale, isSupportedLocale } from "@/lib/i18n/config";
+import { useI18n } from "@/lib/i18n/context";
 
 import {
   Menu,
@@ -20,6 +21,12 @@ const localeToFlag: Record<AppLocale, string> = {
   [LanguageLocaleEnum.EN_US]: "/lang-flag/en.svg",
   [LanguageLocaleEnum.PT_BR]: "/lang-flag/br.svg",
   [LanguageLocaleEnum.ES_ES]: "/lang-flag/es.svg",
+};
+
+const localeToLabel: Record<AppLocale, string> = {
+  [LanguageLocaleEnum.EN_US]: "English",
+  [LanguageLocaleEnum.PT_BR]: "Portuguese",
+  [LanguageLocaleEnum.ES_ES]: "Spanish",
 };
 
 function swapLocaleInPath(pathname: string, locale: AppLocale): string {
@@ -38,6 +45,7 @@ function swapLocaleInPath(pathname: string, locale: AppLocale): string {
 }
 
 export default function LanguageSwitcher() {
+  const { t } = useI18n();
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
@@ -66,6 +74,19 @@ export default function LanguageSwitcher() {
     };
   }, []);
 
+  useEffect(() => {
+    function handleEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
+
   const handleChangeLocale = (locale: AppLocale) => {
     if (locale === activeLocale) {
       setIsOpen(false);
@@ -79,20 +100,22 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <Switcher aria-label="Language switcher" ref={rootRef}>
+    <Switcher aria-label={t("dashboardLayout", "language.aria", "Language switcher")} ref={rootRef}>
       <Trigger
         type="button"
         onClick={() => setIsOpen((previous) => !previous)}
         aria-expanded={isOpen}
         aria-haspopup="menu"
+        aria-label={t("dashboardLayout", "language.trigger", "Select language")}
         disabled={isPending}
       >
         <TriggerFlag>
           <Image
             src={localeToFlag[activeLocale]}
-            alt={localeToFlag[activeLocale]}
+            alt={localeToLabel[activeLocale]}
             width={28}
             height={20}
+            sizes="(max-width: 768px) 24px, 28px"
           />
         </TriggerFlag>
       </Trigger>
@@ -105,11 +128,17 @@ export default function LanguageSwitcher() {
               type="button"
               isActive={locale === activeLocale}
               onClick={() => handleChangeLocale(locale)}
-              aria-label={localeToFlag[locale]}
+              aria-label={localeToLabel[locale]}
               role="menuitem"
             >
               <MenuFlag>
-                <Image src={localeToFlag[locale]} alt={localeToFlag[locale]} width={28} height={20} />
+                <Image
+                  src={localeToFlag[locale]}
+                  alt={localeToLabel[locale]}
+                  width={28}
+                  height={20}
+                  sizes="(max-width: 768px) 24px, 28px"
+                />
               </MenuFlag>
             </MenuItem>
           ))}

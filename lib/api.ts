@@ -8,6 +8,21 @@ interface ApiFetchOptions {
 
 const API_BASE_URL = "https://disease.sh/v3/covid-19";
 
+export class ApiRequestError extends Error {
+  constructor(
+    message: string,
+    public readonly status: number,
+    public readonly url: string,
+  ) {
+    super(message);
+    this.name = "ApiRequestError";
+  }
+}
+
+export function isApiRequestError(error: unknown): error is ApiRequestError {
+  return error instanceof ApiRequestError;
+}
+
 function buildQueryString(query: Record<string, QueryValue> = {}): string {
   const search = new URLSearchParams();
 
@@ -38,7 +53,11 @@ export async function apiFetch<T>(
   });
 
   if (!response.ok) {
-    throw new Error(`API request failed (${response.status}) for ${url}`);
+    throw new ApiRequestError(
+      `API request failed (${response.status}) for ${url}`,
+      response.status,
+      url,
+    );
   }
 
   return (await response.json()) as T;

@@ -1,4 +1,5 @@
 import GlobalDashboardView from "@/app/dashboard/components/views/global-dashboard-view";
+import { isApiRequestError } from "@/lib/api";
 import { DashboardFilters } from "@/lib/dto/dashboard-filters.dto";
 import { MetricType } from "@/lib/enum/metric-type.enum";
 import { CovidService } from "@/lib/services/covid.service";
@@ -8,6 +9,7 @@ import {
   getMetricValue,
   parseDashboardFilters,
 } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
 type SearchParams = Record<string, string | string[] | undefined>;
 
@@ -25,13 +27,35 @@ export default async function GlobalPage({ searchParams }: GlobalPageProps) {
   const hasCountryFilter = Boolean(filters.country);
   const shouldUseHistoricalTrend = Boolean(filters.startDate && filters.endDate);
 
-  const [globalData, continentsData, countriesData, historicalData, countryData] = await Promise.all([
+  const [globalData, continentsData, countriesData, historicalData] = await Promise.all([
     CovidService.getGlobalData(filters.interval),
     CovidService.getContinentsData(filters.interval),
     CovidService.getCountriesData(filters.interval),
     shouldUseHistoricalTrend ? CovidService.getGlobalHistoricalData("all") : Promise.resolve(null),
-    hasCountryFilter ? CovidService.getCountryData(filters.country, filters.interval) : Promise.resolve(null),
   ]);
+
+  let countryData = null;
+
+  if (hasCountryFilter) {
+    const normalizedCountryFilter = filters.country.trim().toLocaleLowerCase();
+    const matchedCountry = countriesData.find(
+      (country) => country.country.toLocaleLowerCase() === normalizedCountryFilter,
+    );
+
+    if (!matchedCountry) {
+      redirect("/");
+    }
+
+    countryData = await CovidService.getCountryData(matchedCountry.country, filters.interval).catch(
+      (error: unknown) => {
+        if (isApiRequestError(error) && error.status === 404) {
+          redirect("/");
+        }
+
+        throw error;
+      },
+    );
+  }
 
   const focusedSource = countryData ?? globalData;
   const metricValue = getMetricValue(focusedSource, filters.metric);
@@ -83,7 +107,7 @@ export default async function GlobalPage({ searchParams }: GlobalPageProps) {
       endDate={filters.endDate}
       resolvedInterval={filters.interval}
       metricLabel={getMetricLabel(filters)}
-      selectedCountry={filters.country}
+      selectedCountry={countryData?.country ?? filters.country}
     />
   );
 }

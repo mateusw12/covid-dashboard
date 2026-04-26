@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { isApiRequestError } from "@/lib/api";
 import { IntervalType } from "@/lib/enum/interval-type.enum";
 import { CovidService } from "@/lib/services/covid.service";
 
@@ -47,6 +48,16 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ error: "Invalid scope" }, { status: 400 });
   } catch (error) {
+    if (isApiRequestError(error) && error.status === 404) {
+      return NextResponse.json(
+        {
+          error: "COVID data not found",
+          details: error.message,
+        },
+        { status: 404 },
+      );
+    }
+
     return NextResponse.json(
       {
         error: "Failed to fetch COVID data",

@@ -3,6 +3,7 @@
 import styled from "@emotion/styled";
 import { toPng, toSvg } from "html-to-image";
 import { RefObject, useState } from "react";
+import { useI18n } from "@/lib/i18n/context";
 
 const Actions = styled.div`
   display: flex;
@@ -38,6 +39,7 @@ function downloadFromDataUrl(dataUrl: string, filename: string) {
 }
 
 export default function ChartExportActions({ targetRef, fileBaseName }: ChartExportActionsProps) {
+  const { t } = useI18n();
   const [isBusy, setIsBusy] = useState(false);
 
   const handleExportPng = async () => {
@@ -80,10 +82,10 @@ export default function ChartExportActions({ targetRef, fileBaseName }: ChartExp
   return (
     <Actions>
       <ActionButton type="button" onClick={handleExportPng} disabled={isBusy}>
-        PNG
+        {t("dashboardViews", "export.png", "PNG")}
       </ActionButton>
       <ActionButton type="button" onClick={handleExportSvg} disabled={isBusy}>
-        SVG
+        {t("dashboardViews", "export.svg", "SVG")}
       </ActionButton>
     </Actions>
   );

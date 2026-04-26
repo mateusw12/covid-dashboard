@@ -1,6 +1,7 @@
 "use client";
 
 import styled from "@emotion/styled";
+import { useI18n } from "@/lib/i18n/context";
 import { utils, writeFile } from "xlsx";
 
 const ExportButton = styled.button`
@@ -20,6 +21,8 @@ interface TableExportButtonProps {
 }
 
 export default function TableExportButton({ rows, fileName }: TableExportButtonProps) {
+  const { t } = useI18n();
+
   const handleExport = () => {
     const worksheet = utils.json_to_sheet(rows);
     const workbook = utils.book_new();
@@ -30,7 +33,7 @@ export default function TableExportButton({ rows, fileName }: TableExportButtonP
 
   return (
     <ExportButton type="button" onClick={handleExport}>
-      Export Excel
+      {t("dashboardViews", "export.excel", "Export Excel")}
     </ExportButton>
   );
 }

@@ -52,7 +52,11 @@ export default function VaccineFilter({ country, days }: VaccineFilterProps) {
     <VaccineFilterBar onSubmit={handleSubmit}>
       <FilterField>
         <FilterLabel>{t("vaccine", "country", "Country")}</FilterLabel>
-        <FilterInput name="country" defaultValue={country} placeholder="Brazil" />
+        <FilterInput
+          name="country"
+          defaultValue={country}
+          placeholder={t("vaccine", "countryPlaceholder", "Brazil")}
+        />
       </FilterField>
 
       <FilterField>

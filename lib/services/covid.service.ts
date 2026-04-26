@@ -2,13 +2,14 @@ import { apiFetch } from "@/lib/api";
 import { ContinentData } from "@/lib/dto/continent-data.dto";
 import { CountryData } from "@/lib/dto/country-data.dto";
 import { GlobalData } from "@/lib/dto/global-data.dto";
-import { IntervalType, MetricType } from "@/lib/dto/dashboard-filters.dto";
+import { IntervalType } from "@/lib/enum/interval-type.enum";
+import { MetricType } from "@/lib/enum/metric-type.enum";
 import { getMetricValue } from "@/lib/utils";
 
 export class CovidService {
   private static readonly defaultRevalidate = 60;
 
-  static async getGlobalData(interval: IntervalType = "today"): Promise<GlobalData> {
+  static async getGlobalData(interval: IntervalType = IntervalType.Today): Promise<GlobalData> {
     return apiFetch<GlobalData>("all", {
       query: this.resolveIntervalQuery(interval),
       revalidate: this.defaultRevalidate,
@@ -16,7 +17,7 @@ export class CovidService {
   }
 
   static async getContinentsData(
-    interval: IntervalType = "today",
+    interval: IntervalType = IntervalType.Today,
   ): Promise<ContinentData[]> {
     return apiFetch<ContinentData[]>("continents", {
       query: this.resolveIntervalQuery(interval),
@@ -26,7 +27,7 @@ export class CovidService {
 
   static async getContinentData(
     continent: string,
-    interval: IntervalType = "today",
+    interval: IntervalType = IntervalType.Today,
   ): Promise<ContinentData> {
     return apiFetch<ContinentData>(`continents/${encodeURIComponent(continent)}`, {
       query: { strict: true, ...this.resolveIntervalQuery(interval) },
@@ -34,7 +35,7 @@ export class CovidService {
     });
   }
 
-  static async getCountriesData(interval: IntervalType = "today"): Promise<CountryData[]> {
+  static async getCountriesData(interval: IntervalType = IntervalType.Today): Promise<CountryData[]> {
     return apiFetch<CountryData[]>("countries", {
       query: this.resolveIntervalQuery(interval),
       revalidate: this.defaultRevalidate,
@@ -43,7 +44,7 @@ export class CovidService {
 
   static async getCountryData(
     country: string,
-    interval: IntervalType = "today",
+    interval: IntervalType = IntervalType.Today,
   ): Promise<CountryData> {
     return apiFetch<CountryData>(`countries/${encodeURIComponent(country)}`, {
       query: { strict: true, ...this.resolveIntervalQuery(interval) },
@@ -62,11 +63,11 @@ export class CovidService {
   }
 
   private static resolveIntervalQuery(interval: IntervalType) {
-    if (interval === "yesterday") {
+    if (interval === IntervalType.Yesterday) {
       return { yesterday: true };
     }
 
-    if (interval === "twoDaysAgo") {
+    if (interval === IntervalType.TwoDaysAgo) {
       return { twoDaysAgo: true };
     }
 

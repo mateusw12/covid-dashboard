@@ -46,14 +46,43 @@ export function parseDashboardFilters(
   searchParams: Record<string, string | string[] | undefined>,
 ): DashboardFilters {
   const metric = normalizeMetric(searchParams.metric);
-  const interval = normalizeInterval(searchParams.interval);
+  const parsedStartDate = normalizeDateInput(searchParams.startDate);
+  const parsedEndDate = normalizeDateInput(searchParams.endDate);
+  const interval = parsedEndDate
+    ? resolveIntervalFromDateValue(parsedEndDate)
+    : normalizeInterval(searchParams.interval);
 
   return {
     continent: getSingleValue(searchParams.continent),
     country: getSingleValue(searchParams.country),
+    startDate: parsedStartDate,
+    endDate: parsedEndDate,
     metric,
     interval,
   };
+}
+
+export function resolveIntervalFromDateValue(inputDate: string): IntervalType {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const target = new Date(`${inputDate}T00:00:00`);
+
+  if (Number.isNaN(target.getTime())) {
+    return IntervalType.Today;
+  }
+
+  const diff = Math.floor((today.getTime() - target.getTime()) / (1000 * 60 * 60 * 24));
+
+  if (diff === 1) {
+    return IntervalType.Yesterday;
+  }
+
+  if (diff >= 2) {
+    return IntervalType.TwoDaysAgo;
+  }
+
+  return IntervalType.Today;
 }
 
 function getSingleValue(value: string | string[] | undefined): string {
@@ -82,4 +111,14 @@ function normalizeInterval(value: string | string[] | undefined): IntervalType {
   }
 
   return IntervalType.Today;
+}
+
+function normalizeDateInput(value: string | string[] | undefined): string {
+  const candidate = getSingleValue(value);
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(candidate)) {
+    return candidate;
+  }
+
+  return "";
 }

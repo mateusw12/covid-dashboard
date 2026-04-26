@@ -15,19 +15,19 @@
 }
 
 html.dark {
-  --bg: #020617;
-  --card: #0f172a;
-  --primary: #3b82f6;
-  --secondary: #8b5cf6;
-  --accent: #22d3ee;
-  --success: #22c55e;
-  --warning: #fbbf24;
-  --danger: #ef4444;
-  --text: #e2e8f0;
-  --text-muted: color-mix(in srgb, var(--text) 62%, #94a3b8);
+  --bg: #080808;
+  --card: #141414;
+  --primary: #ff7a1a;
+  --secondary: #c8641e;
+  --accent: #ffb357;
+  --success: #9ab973;
+  --warning: #ffc15a;
+  --danger: #ff6b57;
+  --text: #f7f2ea;
+  --text-muted: color-mix(in srgb, var(--text) 56%, #9f9183);
   --border: color-mix(in srgb, var(--text) 18%, transparent);
   --border-strong: color-mix(in srgb, var(--text) 26%, transparent);
-  --shadow-soft: 0 12px 32px color-mix(in srgb, #020617 65%, transparent);
+  --shadow-soft: 0 14px 36px color-mix(in srgb, #000000 72%, transparent);
 }
 
 * {

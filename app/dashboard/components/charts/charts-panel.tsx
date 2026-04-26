@@ -35,6 +35,7 @@ interface ChartsPanelProps {
   continentDistribution: ValueItem[];
   metricLabel: string;
   onCountryClick?: (country: string) => void;
+  selectedCountry?: string;
 }
 
 export default function ChartsPanel({
@@ -43,11 +44,17 @@ export default function ChartsPanel({
   continentDistribution,
   metricLabel,
   onCountryClick,
+  selectedCountry,
 }: ChartsPanelProps) {
   return (
     <>
       <LineChart data={trendData} metricLabel={metricLabel} />
-      <BarChart data={topCountries} metricLabel={metricLabel} onCountryClick={onCountryClick} />
+      <BarChart
+        data={topCountries}
+        metricLabel={metricLabel}
+        onCountryClick={onCountryClick}
+        selectedCountry={selectedCountry}
+      />
       <ContinentMap data={continentDistribution} metricLabel={metricLabel} />
     </>
   );

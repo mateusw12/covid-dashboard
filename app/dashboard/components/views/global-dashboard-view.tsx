@@ -9,7 +9,16 @@ import { GlobalData } from "@/lib/dto/global-data.dto";
 import { IntervalType } from "@/lib/enum/interval-type.enum";
 import { useI18n } from "@/lib/i18n/context";
 
-import { ChartsGrid, Hero, HeroText, HeroTitle, PageWrapper } from "./views.styles";
+import {
+  ChartsGrid,
+  ClearFilterButton,
+  Hero,
+  HeroText,
+  HeroTitle,
+  PageWrapper,
+  SelectedFilterBar,
+  SelectedFilterMeta,
+} from "./views.styles";
 
 interface TrendItem {
   label: string;
@@ -60,6 +69,16 @@ export default function GlobalDashboardView({
     });
   };
 
+  const handleClearCountryFilter = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("country");
+
+    startTransition(() => {
+      const query = params.toString();
+      router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    });
+  };
+
   return (
     <PageWrapper>
       <Hero>
@@ -80,6 +99,17 @@ export default function GlobalDashboardView({
         resolvedInterval={resolvedInterval}
       />
 
+      {selectedCountry ? (
+        <SelectedFilterBar role="status" aria-live="polite">
+          <SelectedFilterMeta>
+            {t("dashboardViews", "global.selectedCountry", "Selected country")}: <strong>{selectedCountry}</strong>
+          </SelectedFilterMeta>
+          <ClearFilterButton type="button" onClick={handleClearCountryFilter} disabled={isPending}>
+            {t("dashboardViews", "global.clearCountryFilter", "Clear filter")}
+          </ClearFilterButton>
+        </SelectedFilterBar>
+      ) : null}
+
       <StatsCards
         data={globalData}
         selectedCountry={selectedCountry}
@@ -94,6 +124,7 @@ export default function GlobalDashboardView({
           topCountries={topCountries}
           continentDistribution={continentDistribution}
           metricLabel={metricLabel}
+          selectedCountry={selectedCountry}
           onCountryClick={isPending ? undefined : handleCountryClick}
         />
       </ChartsGrid>

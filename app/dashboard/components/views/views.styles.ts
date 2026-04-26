@@ -28,6 +28,49 @@ export const HeroText = styled.p`
   color: var(--text-muted);
 `;
 
+export const SelectedFilterBar = styled.section`
+  border: 1px solid color-mix(in srgb, var(--accent) 38%, var(--border));
+  border-radius: 0.85rem;
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: color-mix(in srgb, var(--accent) 10%, var(--card));
+`;
+
+export const SelectedFilterMeta = styled.p`
+  margin: 0;
+  color: var(--text);
+  font-size: 0.92rem;
+
+  strong {
+    color: var(--accent-strong);
+    font-weight: 700;
+  }
+`;
+
+export const ClearFilterButton = styled.button`
+  appearance: none;
+  border: 1px solid var(--border-strong);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 0.7rem;
+  padding: 0.4rem 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: color-mix(in srgb, var(--card) 80%, var(--bg));
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+`;
+
 export const ChartsGrid = styled.section`
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));

@@ -4,6 +4,7 @@ import {
   Bar,
   BarChart as RechartsBarChart,
   CartesianGrid,
+  Cell,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -25,10 +26,17 @@ interface BarChartProps {
   data: BarItem[];
   metricLabel: string;
   onCountryClick?: (country: string) => void;
+  selectedCountry?: string;
 }
 
-export default function BarChart({ data, metricLabel, onCountryClick }: BarChartProps) {
+export default function BarChart({
+  data,
+  metricLabel,
+  onCountryClick,
+  selectedCountry,
+}: BarChartProps) {
   const chartRef = useRef<HTMLElement | null>(null);
+  const normalizedSelectedCountry = selectedCountry?.trim().toLocaleLowerCase();
 
   const handleBarClick = (entry: { name?: string; payload?: { name?: string } }) => {
     const countryName = entry?.name ?? entry?.payload?.name;
@@ -69,11 +77,23 @@ export default function BarChart({ data, metricLabel, onCountryClick }: BarChart
             />
             <Bar
               dataKey="value"
-              fill="var(--primary)"
               radius={[6, 6, 0, 0]}
               cursor={onCountryClick ? "pointer" : "default"}
               onClick={handleBarClick}
-            />
+            >
+              {data.map((item) => {
+                const isSelected = item.name.toLocaleLowerCase() === normalizedSelectedCountry;
+
+                return (
+                  <Cell
+                    key={item.name}
+                    fill={isSelected ? "var(--accent)" : "var(--primary)"}
+                    stroke={isSelected ? "var(--primary-strong)" : "transparent"}
+                    strokeWidth={isSelected ? 2 : 0}
+                  />
+                );
+              })}
+            </Bar>
           </RechartsBarChart>
         </ResponsiveContainer>
       </ChartBody>

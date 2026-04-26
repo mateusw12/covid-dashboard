@@ -3,6 +3,8 @@
   "overview.text": "Analyze global and regional indicators with server-driven filtering, cached fetches, and lightweight interactive charts.",
   "global.title": "Global Overview",
   "global.text": "Global KPIs and comparative charts focused on worldwide evolution.",
+  "global.selectedCountry": "Selected country",
+  "global.clearCountryFilter": "Clear filter",
   "countries.title": "Countries",
   "countries.text": "Detailed ranking of countries and comparative metric distribution.",
   "countries.tableTitle": "Top Countries Table",

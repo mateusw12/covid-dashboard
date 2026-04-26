@@ -3,6 +3,8 @@
   "overview.text": "Analiza indicadores globales y regionales con filtros en servidor, fetches en caché y gráficos interactivos ligeros.",
   "global.title": "Resumen Global",
   "global.text": "KPIs globales y gráficos comparativos centrados en la evolución mundial.",
+  "global.selectedCountry": "País seleccionado",
+  "global.clearCountryFilter": "Limpiar filtro",
   "countries.title": "Países",
   "countries.text": "Ranking detallado de países y distribución comparativa de métricas.",
   "countries.tableTitle": "Tabla de Países",

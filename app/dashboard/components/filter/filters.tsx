@@ -95,7 +95,11 @@ export default function Filters({ continents, countries, current }: FiltersProps
         >
           {METRIC_OPTIONS.map((option) => (
             <option key={option.value} value={option.value}>
-              {option.label}
+              {t(
+                "dashboardLayout",
+                `filters.metric.${option.value}`,
+                option.label,
+              )}
             </option>
           ))}
         </Select>
@@ -109,7 +113,11 @@ export default function Filters({ continents, countries, current }: FiltersProps
         >
           {INTERVAL_OPTIONS.map((option) => (
             <option key={option.value} value={option.value}>
-              {option.label}
+              {t(
+                "dashboardLayout",
+                `filters.interval.${option.value}`,
+                option.label,
+              )}
             </option>
           ))}
         </Select>

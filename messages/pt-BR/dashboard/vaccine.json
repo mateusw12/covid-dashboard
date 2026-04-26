@@ -3,5 +3,6 @@
   "days": "Dias",
   "apply": "Aplicar Filtro de Vacina",
   "applying": "Aplicando...",
-  "lineMetricSuffix": "últimos"
+  "lineMetricSuffix": "ultimos",
+  "countryPlaceholder": "Brasil"
 }

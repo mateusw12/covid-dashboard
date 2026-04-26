@@ -3,5 +3,8 @@
   "endDate": "End Date",
   "apply": "Apply Date Filter",
   "applying": "Applying...",
-  "snapshot": "Snapshot resolved as"
+  "snapshot": "Snapshot resolved as",
+  "interval.today": "today",
+  "interval.yesterday": "yesterday",
+  "interval.twoDaysAgo": "two days ago"
 }

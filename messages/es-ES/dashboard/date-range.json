@@ -3,5 +3,8 @@
   "endDate": "Fecha Final",
   "apply": "Aplicar Filtro de Fecha",
   "applying": "Aplicando...",
-  "snapshot": "Snapshot resuelto como"
+  "snapshot": "Snapshot resuelto como",
+  "interval.today": "hoy",
+  "interval.yesterday": "ayer",
+  "interval.twoDaysAgo": "hace dos dias"
 }

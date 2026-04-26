@@ -1,4 +1,6 @@
 {
+  "overview.title": "Global Health Snapshot",
+  "overview.text": "Analyze global and regional indicators with server-driven filtering, cached fetches, and lightweight interactive charts.",
   "global.title": "Global Overview",
   "global.text": "Global KPIs and comparative charts focused on worldwide evolution.",
   "countries.title": "Countries",
@@ -15,5 +17,17 @@
   "vaccines.text": "Monitor vaccination evolution by country and compare latest coverage across countries.",
   "vaccines.tableTitle": "Latest Coverage by Country",
   "vaccines.table.country": "Country",
-  "vaccines.table.latest": "Latest Coverage"
+  "vaccines.table.latest": "Latest Coverage",
+  "vaccines.latestDoses": "Latest doses",
+  "stats.totalCases": "Total Cases",
+  "stats.deaths": "Deaths",
+  "stats.recovered": "Recovered",
+  "stats.active": "Active",
+  "stats.critical": "Critical",
+  "stats.today": "today",
+  "stats.noDailyDelta": "No daily delta",
+  "stats.updatedAt": "Updated at",
+  "export.excel": "Export Excel",
+  "export.png": "PNG",
+  "export.svg": "SVG"
 }

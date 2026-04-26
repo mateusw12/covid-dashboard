@@ -1,4 +1,6 @@
 {
+  "overview.title": "Panorama Global de Saude",
+  "overview.text": "Analise indicadores globais e regionais com filtros no servidor, fetches em cache e graficos interativos leves.",
   "global.title": "Visão Global",
   "global.text": "KPIs globais e gráficos comparativos com foco na evolução mundial.",
   "countries.title": "Países",
@@ -15,5 +17,17 @@
   "vaccines.text": "Monitore a evolução da vacinação por país e compare a cobertura mais recente.",
   "vaccines.tableTitle": "Cobertura Mais Recente por País",
   "vaccines.table.country": "País",
-  "vaccines.table.latest": "Cobertura Mais Recente"
+  "vaccines.table.latest": "Cobertura Mais Recente",
+  "vaccines.latestDoses": "Doses mais recentes",
+  "stats.totalCases": "Casos Totais",
+  "stats.deaths": "Obitos",
+  "stats.recovered": "Recuperados",
+  "stats.active": "Ativos",
+  "stats.critical": "Criticos",
+  "stats.today": "hoje",
+  "stats.noDailyDelta": "Sem variacao diaria",
+  "stats.updatedAt": "Atualizado em",
+  "export.excel": "Exportar Excel",
+  "export.png": "PNG",
+  "export.svg": "SVG"
 }

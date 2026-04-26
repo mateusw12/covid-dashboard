@@ -8,10 +8,15 @@ const PUBLIC_FILE = /\.(.*)$/;
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  if (pathname === "/favicon.ico") {
+    const redirectedUrl = request.nextUrl.clone();
+    redirectedUrl.pathname = "/logo/covid-19.png";
+    return NextResponse.redirect(redirectedUrl);
+  }
+
   if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
-    pathname.startsWith("/favicon") ||
     PUBLIC_FILE.test(pathname)
   ) {
     return NextResponse.next();
@@ -31,5 +36,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!_next/static|_next/image).*)"],
 };

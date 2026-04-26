@@ -49,6 +49,7 @@ export default function DashboardLayout({
           <NavLink href="/dashboard/global">Global</NavLink>
           <NavLink href="/dashboard/countries">Countries</NavLink>
           <NavLink href="/dashboard/continents">Continents</NavLink>
+          <NavLink href="/dashboard/vaccines">Vaccines</NavLink>
         </Nav>
       </Sidebar>
 
@@ -75,6 +76,7 @@ export default function DashboardLayout({
         <MobileLink href="/dashboard/global">Global</MobileLink>
         <MobileLink href="/dashboard/countries">Countries</MobileLink>
         <MobileLink href="/dashboard/continents">Continents</MobileLink>
+        <MobileLink href="/dashboard/vaccines">Vaccines</MobileLink>
       </MobileNav>
     </DashboardShell>
   );

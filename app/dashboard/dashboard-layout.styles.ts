@@ -132,7 +132,7 @@ export const MobileNav = styled.nav`
   border-top: 1px solid var(--border);
   padding: 0.6rem 1rem;
   display: none;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 0.6rem;
 
   @media (max-width: 980px) {

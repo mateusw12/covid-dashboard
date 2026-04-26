@@ -47,6 +47,7 @@ export default function DashboardLayout({
                 alt="CoviScope logo"
                 width={44}
                 height={44}
+                sizes="(max-width: 768px) 32px, 44px"
                 priority
               />
             </BrandLogo>
@@ -88,6 +89,7 @@ export default function DashboardLayout({
                 alt="CoviScope logo"
                 width={32}
                 height={32}
+                sizes="32px"
                 priority
               />
             </TopbarLogo>

@@ -1,0 +1,19 @@
+{
+  "global.title": "Visão Global",
+  "global.text": "KPIs globais e gráficos comparativos com foco na evolução mundial.",
+  "countries.title": "Países",
+  "countries.text": "Ranking detalhado de países e distribuição comparativa de métricas.",
+  "countries.tableTitle": "Tabela de Países",
+  "countries.table.country": "País",
+  "countries.table.continent": "Continente",
+  "countries.table.metric": "Métrica",
+  "countries.table.population": "População",
+  "continents.title": "Continentes",
+  "continents.text": "Indicadores continentais de saúde e distribuição regional.",
+  "continents.populationLabel": "População",
+  "vaccines.title": "Cobertura de Vacinação",
+  "vaccines.text": "Monitore a evolução da vacinação por país e compare a cobertura mais recente.",
+  "vaccines.tableTitle": "Cobertura Mais Recente por País",
+  "vaccines.table.country": "País",
+  "vaccines.table.latest": "Cobertura Mais Recente"
+}

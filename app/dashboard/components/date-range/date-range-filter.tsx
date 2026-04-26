@@ -4,6 +4,7 @@ import { FormEvent, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { IntervalType } from "@/lib/enum/interval-type.enum";
+import { useI18n } from "@/lib/i18n/context";
 import { resolveIntervalFromDateValue } from "@/lib/utils";
 import {
   DateFilterBar,
@@ -25,6 +26,7 @@ export default function DateRangeFilter({
   endDate,
   resolvedInterval,
 }: DateRangeFilterProps) {
+  const { t } = useI18n();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -70,20 +72,22 @@ export default function DateRangeFilter({
   return (
     <DateFilterBar onSubmit={handleApply}>
       <DateField>
-        <DateLabel>Start Date</DateLabel>
+        <DateLabel>{t("dateRange", "startDate", "Start Date")}</DateLabel>
         <DateInput name="startDate" type="date" defaultValue={startDate} />
       </DateField>
 
       <DateField>
-        <DateLabel>End Date</DateLabel>
+        <DateLabel>{t("dateRange", "endDate", "End Date")}</DateLabel>
         <DateInput name="endDate" type="date" defaultValue={endDate} />
       </DateField>
 
       <ApplyButton type="submit" disabled={isPending}>
-        {isPending ? "Applying..." : "Apply Date Filter"}
+        {isPending ? t("dateRange", "applying", "Applying...") : t("dateRange", "apply", "Apply Date Filter")}
       </ApplyButton>
 
-      <DateStatus>Snapshot resolved as {intervalLabel}.</DateStatus>
+      <DateStatus>
+        {t("dateRange", "snapshot", "Snapshot resolved as")} {intervalLabel}.
+      </DateStatus>
     </DateFilterBar>
   );
 }

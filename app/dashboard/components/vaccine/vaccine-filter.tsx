@@ -2,6 +2,7 @@
 
 import { FormEvent, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useI18n } from "@/lib/i18n/context";
 
 import {
   FilterButton,
@@ -17,6 +18,7 @@ interface VaccineFilterProps {
 }
 
 export default function VaccineFilter({ country, days }: VaccineFilterProps) {
+  const { t } = useI18n();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -49,17 +51,17 @@ export default function VaccineFilter({ country, days }: VaccineFilterProps) {
   return (
     <VaccineFilterBar onSubmit={handleSubmit}>
       <FilterField>
-        <FilterLabel>Country</FilterLabel>
+        <FilterLabel>{t("vaccine", "country", "Country")}</FilterLabel>
         <FilterInput name="country" defaultValue={country} placeholder="Brazil" />
       </FilterField>
 
       <FilterField>
-        <FilterLabel>Days</FilterLabel>
+        <FilterLabel>{t("vaccine", "days", "Days")}</FilterLabel>
         <FilterInput name="days" type="number" min={1} max={730} defaultValue={days} />
       </FilterField>
 
       <FilterButton type="submit" disabled={isPending}>
-        {isPending ? "Applying..." : "Apply Vaccine Filter"}
+        {isPending ? t("vaccine", "applying", "Applying...") : t("vaccine", "apply", "Apply Vaccine Filter")}
       </FilterButton>
     </VaccineFilterBar>
   );

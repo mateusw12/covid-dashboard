@@ -103,6 +103,12 @@ export const TopbarBrand = styled.div`
   gap: 0.55rem;
 `;
 
+export const TopbarControls = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+`;
+
 export const TopbarLogo = styled.div`
   width: 32px;
   height: 32px;

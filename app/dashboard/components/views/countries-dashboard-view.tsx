@@ -4,6 +4,7 @@ import BarChart from "@/app/dashboard/components/charts/bar-chart";
 import { formatCompactNumber } from "@/lib/utils";
 import DateRangeFilter from "@/app/dashboard/components/date-range/date-range-filter";
 import { IntervalType } from "@/lib/enum/interval-type.enum";
+import TableExportButton from "@/app/dashboard/components/table/table-export-button";
 
 import {
   Hero,
@@ -65,6 +66,15 @@ export default function CountriesDashboardView({
       <Panel>
         <PanelHeader>
           <PanelTitle>Top Countries Table</PanelTitle>
+          <TableExportButton
+            rows={rows.map((row) => ({
+              country: row.country,
+              continent: row.continent,
+              metric: row.value,
+              population: row.population,
+            }))}
+            fileName="coviscope-countries.xlsx"
+          />
         </PanelHeader>
         <PanelBody>
           <Table>

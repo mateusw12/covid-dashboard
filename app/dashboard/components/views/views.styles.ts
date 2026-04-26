@@ -60,6 +60,10 @@ export const Panel = styled.section`
 export const PanelHeader = styled.header`
   padding: 1rem;
   border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
 `;
 
 export const PanelTitle = styled.h3`

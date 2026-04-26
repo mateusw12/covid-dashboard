@@ -9,7 +9,9 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useRef } from "react";
 
+import ChartExportActions from "@/app/dashboard/components/charts/export/chart-export-actions";
 import { formatCompactNumber } from "@/lib/utils";
 
 import { ChartBody, ChartCard, ChartHeader, ChartSubTitle, ChartTitle } from "./line-chart.styles";
@@ -25,11 +27,16 @@ interface LineChartProps {
 }
 
 export default function LineChart({ data, metricLabel }: LineChartProps) {
+  const chartRef = useRef<HTMLElement | null>(null);
+
   return (
-    <ChartCard>
+    <ChartCard ref={chartRef}>
       <ChartHeader>
-        <ChartTitle>Temporal Trend</ChartTitle>
-        <ChartSubTitle>{metricLabel}</ChartSubTitle>
+        <div>
+          <ChartTitle>Temporal Trend</ChartTitle>
+          <ChartSubTitle>{metricLabel}</ChartSubTitle>
+        </div>
+        <ChartExportActions targetRef={chartRef} fileBaseName="coviscope-trend" />
       </ChartHeader>
       <ChartBody>
         <ResponsiveContainer width="100%" height="100%">

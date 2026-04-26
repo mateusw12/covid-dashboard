@@ -42,6 +42,35 @@ export function buildTrendSeries(total: number, todayDelta: number) {
   ];
 }
 
+export function buildTrendSeriesFromTimeline(
+  timeline: Record<string, number>,
+  startDate: string,
+  endDate: string,
+) {
+  const start = parseDateInput(startDate);
+  const end = parseDateInput(endDate);
+
+  if (!start || !end) {
+    return [];
+  }
+
+  const lower = start <= end ? start : end;
+  const upper = start <= end ? end : start;
+
+  return Object.entries(timeline)
+    .map(([label, value]) => ({
+      label,
+      date: parseTimelineDate(label),
+      value,
+    }))
+    .filter((item) => item.date && item.date >= lower && item.date <= upper)
+    .sort((left, right) => (left.date && right.date ? left.date.getTime() - right.date.getTime() : 0))
+    .map((item) => ({
+      label: item.label,
+      value: item.value,
+    }));
+}
+
 export function parseDashboardFilters(
   searchParams: Record<string, string | string[] | undefined>,
 ): DashboardFilters {
@@ -121,4 +150,35 @@ function normalizeDateInput(value: string | string[] | undefined): string {
   }
 
   return "";
+}
+
+function parseDateInput(value: string): Date | null {
+  const parsed = new Date(`${value}T00:00:00`);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return null;
+  }
+
+  return parsed;
+}
+
+function parseTimelineDate(value: string): Date | null {
+  const [monthRaw, dayRaw, yearRaw] = value.split("/");
+  const month = Number(monthRaw);
+  const day = Number(dayRaw);
+  const year = Number(yearRaw);
+
+  if (!month || !day || Number.isNaN(year)) {
+    return null;
+  }
+
+  const fullYear = year < 100 ? 2000 + year : year;
+  const parsed = new Date(fullYear, month - 1, day);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return null;
+  }
+
+  parsed.setHours(0, 0, 0, 0);
+  return parsed;
 }

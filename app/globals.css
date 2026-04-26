@@ -1,49 +1,60 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --primary: #2563eb;
+  --secondary: #7c3aed;
+  --accent: #06b6d4;
+  --success: #16a34a;
+  --warning: #f59e0b;
+  --danger: #dc2626;
+  --text: #0f172a;
+  --text-muted: color-mix(in srgb, var(--text) 65%, #94a3b8);
+  --border: color-mix(in srgb, var(--text) 12%, transparent);
+  --border-strong: color-mix(in srgb, var(--text) 22%, transparent);
+  --shadow-soft: 0 12px 32px color-mix(in srgb, #0f172a 12%, transparent);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html.dark {
+  --bg: #020617;
+  --card: #0f172a;
+  --primary: #3b82f6;
+  --secondary: #8b5cf6;
+  --accent: #22d3ee;
+  --success: #22c55e;
+  --warning: #fbbf24;
+  --danger: #ef4444;
+  --text: #e2e8f0;
+  --text-muted: color-mix(in srgb, var(--text) 62%, #94a3b8);
+  --border: color-mix(in srgb, var(--text) 18%, transparent);
+  --border-strong: color-mix(in srgb, var(--text) 26%, transparent);
+  --shadow-soft: 0 12px 32px color-mix(in srgb, #020617 65%, transparent);
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(circle at 8% 4%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 18%),
+    radial-gradient(circle at 94% 0%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 20%),
+    radial-gradient(circle at 16% 100%, color-mix(in srgb, var(--secondary) 9%, transparent), transparent 24%),
+    var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans), "Segoe UI", Tahoma, sans-serif;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 a {
   color: inherit;
   text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
 }

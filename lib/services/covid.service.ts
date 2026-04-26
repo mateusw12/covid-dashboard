@@ -2,6 +2,7 @@ import { apiFetch } from "@/lib/api";
 import { ContinentData } from "@/lib/dto/continent-data.dto";
 import { CountryData } from "@/lib/dto/country-data.dto";
 import { GlobalData } from "@/lib/dto/global-data.dto";
+import { GlobalHistoricalData } from "@/lib/dto/global-historical-data.dto";
 import { IntervalType } from "@/lib/enum/interval-type.enum";
 import { MetricType } from "@/lib/enum/metric-type.enum";
 import { getMetricValue } from "@/lib/utils";
@@ -38,6 +39,15 @@ export class CovidService {
   static async getCountriesData(interval: IntervalType = IntervalType.Today): Promise<CountryData[]> {
     return apiFetch<CountryData[]>("countries", {
       query: this.resolveIntervalQuery(interval),
+      revalidate: this.defaultRevalidate,
+    });
+  }
+
+  static async getGlobalHistoricalData(
+    lastDays: number | "all" = 30,
+  ): Promise<GlobalHistoricalData> {
+    return apiFetch<GlobalHistoricalData>("historical/all", {
+      query: { lastdays: lastDays },
       revalidate: this.defaultRevalidate,
     });
   }

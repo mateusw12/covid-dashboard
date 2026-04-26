@@ -1,0 +1,69 @@
+"use client";
+
+import ContinentMap from "@/app/dashboard/components/continent-map";
+import DateRangeFilter from "@/app/dashboard/components/date-range-filter";
+import { IntervalType } from "@/lib/enum/interval-type.enum";
+import { formatCompactNumber } from "@/lib/utils";
+
+import {
+  Hero,
+  HeroText,
+  HeroTitle,
+  ListCard,
+  ListGrid,
+  ListLabel,
+  ListValue,
+  PageWrapper,
+} from "./views.styles";
+
+interface ContinentRow {
+  name: string;
+  value: number;
+  population: number;
+}
+
+interface ContinentsDashboardViewProps {
+  titleMetric: string;
+  distribution: { name: string; value: number }[];
+  rows: ContinentRow[];
+  startDate: string;
+  endDate: string;
+  resolvedInterval: IntervalType;
+}
+
+export default function ContinentsDashboardView({
+  titleMetric,
+  distribution,
+  rows,
+  startDate,
+  endDate,
+  resolvedInterval,
+}: ContinentsDashboardViewProps) {
+  return (
+    <PageWrapper>
+      <Hero>
+        <HeroTitle>Continents</HeroTitle>
+        <HeroText>Continental health indicators and regional distribution map.</HeroText>
+      </Hero>
+
+      <DateRangeFilter
+        key={`${startDate}-${endDate}`}
+        startDate={startDate}
+        endDate={endDate}
+        resolvedInterval={resolvedInterval}
+      />
+
+      <ContinentMap data={distribution} metricLabel={titleMetric} />
+
+      <ListGrid>
+        {rows.map((row) => (
+          <ListCard key={row.name}>
+            <ListLabel>{row.name}</ListLabel>
+            <ListValue>{formatCompactNumber(row.value)}</ListValue>
+            <ListLabel>Population: {formatCompactNumber(row.population)}</ListLabel>
+          </ListCard>
+        ))}
+      </ListGrid>
+    </PageWrapper>
+  );
+}

@@ -1,8 +1,8 @@
 "use client";
 
-import BarChart from "@/app/dashboard/components/bar-chart";
+import BarChart from "@/app/dashboard/components/charts/bar-chart";
 import { formatCompactNumber } from "@/lib/utils";
-import DateRangeFilter from "@/app/dashboard/components/date-range-filter";
+import DateRangeFilter from "@/app/dashboard/components/date-range/date-range-filter";
 import { IntervalType } from "@/lib/enum/interval-type.enum";
 
 import {

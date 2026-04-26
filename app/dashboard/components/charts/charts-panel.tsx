@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-import ChartFallback from "@/app/dashboard/components/chart-fallback";
+import ChartFallback from "@/app/dashboard/components/charts/chart-fallback";
 
 const LineChart = dynamic(() => import("./line-chart"), {
   ssr: false,
@@ -14,7 +14,7 @@ const BarChart = dynamic(() => import("./bar-chart"), {
   loading: () => <ChartFallback />,
 });
 
-const ContinentMap = dynamic(() => import("./continent-map"), {
+const ContinentMap = dynamic(() => import("../continent-map/continent-map"), {
   ssr: false,
   loading: () => <ChartFallback />,
 });

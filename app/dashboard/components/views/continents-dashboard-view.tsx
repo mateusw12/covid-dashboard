@@ -1,7 +1,7 @@
 "use client";
 
-import ContinentMap from "@/app/dashboard/components/continent-map";
-import DateRangeFilter from "@/app/dashboard/components/date-range-filter";
+import ContinentMap from "@/app/dashboard/components/continent-map/continent-map";
+import DateRangeFilter from "@/app/dashboard/components/date-range/date-range-filter";
 import { IntervalType } from "@/lib/enum/interval-type.enum";
 import { formatCompactNumber } from "@/lib/utils";
 

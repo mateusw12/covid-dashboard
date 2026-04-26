@@ -1,8 +1,8 @@
 "use client";
 
-import ChartsPanel from "@/app/dashboard/components/charts-panel";
-import DateRangeFilter from "@/app/dashboard/components/date-range-filter";
-import StatsCards from "@/app/dashboard/components/stats-cards";
+import ChartsPanel from "@/app/dashboard/components/charts/charts-panel";
+import DateRangeFilter from "@/app/dashboard/components/date-range/date-range-filter";
+import StatsCards from "@/app/dashboard/components/stats-card/stats-cards";
 import { GlobalData } from "@/lib/dto/global-data.dto";
 import { IntervalType } from "@/lib/enum/interval-type.enum";
 

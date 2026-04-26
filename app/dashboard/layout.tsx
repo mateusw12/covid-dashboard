@@ -1,6 +1,6 @@
 "use client";
 
-import ThemeToggle from "@/app/dashboard/components/theme-toggle";
+import ThemeToggle from "@/app/dashboard/components/theme-toggle/theme-toggle";
 
 import {
   Brand,

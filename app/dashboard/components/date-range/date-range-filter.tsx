@@ -5,13 +5,12 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { IntervalType } from "@/lib/enum/interval-type.enum";
 import { resolveIntervalFromDateValue } from "@/lib/utils";
-
 import {
-  ApplyButton,
-  DateField,
   DateFilterBar,
-  DateInput,
+  DateField,
   DateLabel,
+  DateInput,
+  ApplyButton,
   DateStatus,
 } from "./date-range-filter.styles";
 
@@ -55,7 +54,9 @@ export default function DateRangeFilter({
 
     startTransition(() => {
       const query = params.toString();
-      router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+      router.replace(query ? `${pathname}?${query}` : pathname, {
+        scroll: false,
+      });
     });
   };
 
@@ -83,7 +84,6 @@ export default function DateRangeFilter({
       </ApplyButton>
 
       <DateStatus>Snapshot resolved as {intervalLabel}.</DateStatus>
-
     </DateFilterBar>
   );
 }

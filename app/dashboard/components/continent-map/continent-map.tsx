@@ -4,7 +4,7 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 import { formatCompactNumber } from "@/lib/utils";
 
-import { ChartBody, ChartCard, ChartHeader, ChartSubTitle, ChartTitle } from "./line-chart.styles";
+import { ChartBody, ChartCard, ChartHeader, ChartSubTitle, ChartTitle } from "../charts/line-chart.styles";
 import { PieLegend, PieLegendItem, Swatch } from "./continent-map.styles";
 
 interface PieItem {

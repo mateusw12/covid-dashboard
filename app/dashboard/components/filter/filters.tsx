@@ -6,6 +6,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { DashboardFilters } from "@/lib/dto/dashboard-filters.dto";
 import { INTERVAL_OPTIONS, IntervalType } from "@/lib/enum/interval-type.enum";
 import { METRIC_OPTIONS, MetricType } from "@/lib/enum/metric-type.enum";
+import { useI18n } from "@/lib/i18n/context";
 
 import { Field, FiltersWrapper, Input, Label, Select, Status } from "./filters.styles";
 
@@ -21,6 +22,7 @@ interface FiltersProps {
 }
 
 export default function Filters({ continents, countries, current }: FiltersProps) {
+  const { t } = useI18n();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -56,12 +58,12 @@ export default function Filters({ continents, countries, current }: FiltersProps
   return (
     <FiltersWrapper>
       <Field>
-        <Label>Continent</Label>
+        <Label>{t("dashboardLayout", "filters.continent", "Continent")}</Label>
         <Select
           value={current.continent}
           onChange={(event) => updateQuery("continent", event.target.value)}
         >
-          <option value="">All Continents</option>
+          <option value="">{t("dashboardLayout", "filters.allContinents", "All Continents")}</option>
           {continents.map((continent) => (
             <option key={continent} value={continent}>
               {continent}
@@ -71,10 +73,10 @@ export default function Filters({ continents, countries, current }: FiltersProps
       </Field>
 
       <Field>
-        <Label>Country Search</Label>
+        <Label>{t("dashboardLayout", "filters.countrySearch", "Country Search")}</Label>
         <Input
           list="countries-list"
-          placeholder="Type a country"
+          placeholder={t("dashboardLayout", "filters.typeCountry", "Type a country")}
           value={current.country}
           onChange={(event) => updateQuery("country", event.target.value)}
         />
@@ -86,7 +88,7 @@ export default function Filters({ continents, countries, current }: FiltersProps
       </Field>
 
       <Field>
-        <Label>Metric</Label>
+        <Label>{t("dashboardLayout", "filters.metric", "Metric")}</Label>
         <Select
           value={current.metric}
           onChange={(event) => updateQuery("metric", event.target.value as MetricType)}
@@ -100,7 +102,7 @@ export default function Filters({ continents, countries, current }: FiltersProps
       </Field>
 
       <Field>
-        <Label>Interval</Label>
+        <Label>{t("dashboardLayout", "filters.interval", "Interval")}</Label>
         <Select
           value={current.interval}
           onChange={(event) => updateQuery("interval", event.target.value as IntervalType)}
@@ -113,7 +115,11 @@ export default function Filters({ continents, countries, current }: FiltersProps
         </Select>
       </Field>
 
-      {isPending ? <Status>Updating filters...</Status> : <Status>Server-driven filtering</Status>}
+      {isPending ? (
+        <Status>{t("dashboardLayout", "filters.updating", "Updating filters...")}</Status>
+      ) : (
+        <Status>{t("dashboardLayout", "filters.serverDriven", "Server-driven filtering")}</Status>
+      )}
     </FiltersWrapper>
   );
 }

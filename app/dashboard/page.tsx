@@ -1,6 +1,12 @@
 import GlobalDashboardView from "@/app/dashboard/components/views/global-dashboard-view";
 import { DashboardFilters } from "@/lib/dto/dashboard-filters.dto";
-import { parseDashboardFilters, buildTrendSeries, getMetricValue } from "@/lib/utils";
+import { MetricType } from "@/lib/enum/metric-type.enum";
+import {
+  parseDashboardFilters,
+  buildTrendSeries,
+  buildTrendSeriesFromTimeline,
+  getMetricValue,
+} from "@/lib/utils";
 import { CovidService } from "@/lib/services/covid.service";
 
 type SearchParams = Record<string, string | string[] | undefined>;
@@ -16,24 +22,40 @@ function getMetricLabel(filters: DashboardFilters) {
 export default async function DashboardPage({ searchParams }: DashboardPageProps) {
   const rawSearchParams = await searchParams;
   const filters = parseDashboardFilters(rawSearchParams);
+  const shouldUseHistoricalTrend = Boolean(filters.startDate && filters.endDate);
 
-  const [globalData, continentsData, countriesData] = await Promise.all([
+  const [globalData, continentsData, countriesData, historicalData] = await Promise.all([
     CovidService.getGlobalData(filters.interval),
     CovidService.getContinentsData(filters.interval),
     CovidService.getCountriesData(filters.interval),
+    shouldUseHistoricalTrend ? CovidService.getGlobalHistoricalData("all") : Promise.resolve(null),
   ]);
 
   const focusedSource = globalData;
   const metricValue = getMetricValue(focusedSource, filters.metric);
   const dailyMetricField =
-    filters.metric === "cases"
+    filters.metric === MetricType.Cases
       ? "todayCases"
-      : filters.metric === "deaths"
+      : filters.metric === MetricType.Deaths
         ? "todayDeaths"
         : "todayRecovered";
   const dailyMetricValue = getMetricValue(focusedSource, dailyMetricField);
 
-  const trendData = buildTrendSeries(metricValue, dailyMetricValue);
+  const historicalTimeline =
+    filters.metric === MetricType.Cases
+      ? historicalData?.cases
+      : filters.metric === MetricType.Deaths
+        ? historicalData?.deaths
+        : historicalData?.recovered;
+
+  const trendDataFromSnapshot = buildTrendSeries(metricValue, dailyMetricValue);
+
+  const trendData =
+    shouldUseHistoricalTrend && historicalTimeline
+      ? buildTrendSeriesFromTimeline(historicalTimeline, filters.startDate, filters.endDate)
+      : trendDataFromSnapshot;
+
+  const safeTrendData = trendData.length > 0 ? trendData : trendDataFromSnapshot;
   const topCountries = CovidService.getTopCountriesByMetric(countriesData, filters.metric, 8).map(
     (country) => ({
       name: country.country,
@@ -49,7 +71,7 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
   return (
     <GlobalDashboardView
       globalData={globalData}
-      trendData={trendData}
+      trendData={safeTrendData}
       topCountries={topCountries}
       continentDistribution={continentDistribution}
       startDate={filters.startDate}

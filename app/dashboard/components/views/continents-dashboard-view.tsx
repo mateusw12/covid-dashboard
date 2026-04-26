@@ -3,6 +3,7 @@
 import ContinentMap from "@/app/dashboard/components/continent-map/continent-map";
 import DateRangeFilter from "@/app/dashboard/components/date-range/date-range-filter";
 import { IntervalType } from "@/lib/enum/interval-type.enum";
+import { useI18n } from "@/lib/i18n/context";
 import { formatCompactNumber } from "@/lib/utils";
 
 import {
@@ -39,11 +40,19 @@ export default function ContinentsDashboardView({
   endDate,
   resolvedInterval,
 }: ContinentsDashboardViewProps) {
+  const { t } = useI18n();
+
   return (
     <PageWrapper>
       <Hero>
-        <HeroTitle>Continents</HeroTitle>
-        <HeroText>Continental health indicators and regional distribution map.</HeroText>
+        <HeroTitle>{t("dashboardViews", "continents.title", "Continents")}</HeroTitle>
+        <HeroText>
+          {t(
+            "dashboardViews",
+            "continents.text",
+            "Continental health indicators and regional distribution map.",
+          )}
+        </HeroText>
       </Hero>
 
       <DateRangeFilter
@@ -60,7 +69,9 @@ export default function ContinentsDashboardView({
           <ListCard key={row.name}>
             <ListLabel>{row.name}</ListLabel>
             <ListValue>{formatCompactNumber(row.value)}</ListValue>
-            <ListLabel>Population: {formatCompactNumber(row.population)}</ListLabel>
+            <ListLabel>
+              {t("dashboardViews", "continents.populationLabel", "Population")}: {formatCompactNumber(row.population)}
+            </ListLabel>
           </ListCard>
         ))}
       </ListGrid>

@@ -5,6 +5,7 @@ import DateRangeFilter from "@/app/dashboard/components/date-range/date-range-fi
 import StatsCards from "@/app/dashboard/components/stats-card/stats-cards";
 import { GlobalData } from "@/lib/dto/global-data.dto";
 import { IntervalType } from "@/lib/enum/interval-type.enum";
+import { useI18n } from "@/lib/i18n/context";
 
 import { ChartsGrid, Hero, HeroText, HeroTitle, PageWrapper } from "./views.styles";
 
@@ -39,11 +40,19 @@ export default function GlobalDashboardView({
   resolvedInterval,
   metricLabel,
 }: GlobalDashboardViewProps) {
+  const { t } = useI18n();
+
   return (
     <PageWrapper>
       <Hero>
-        <HeroTitle>Global Overview</HeroTitle>
-        <HeroText>Global KPIs and comparative charts focused on worldwide evolution.</HeroText>
+        <HeroTitle>{t("dashboardViews", "global.title", "Global Overview")}</HeroTitle>
+        <HeroText>
+          {t(
+            "dashboardViews",
+            "global.text",
+            "Global KPIs and comparative charts focused on worldwide evolution.",
+          )}
+        </HeroText>
       </Hero>
 
       <DateRangeFilter

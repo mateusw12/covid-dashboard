@@ -5,6 +5,7 @@ import Filters from "@/app/dashboard/components/filter/filters";
 import StatsCards from "@/app/dashboard/components/stats-card/stats-cards";
 import { DashboardFilters } from "@/lib/dto/dashboard-filters.dto";
 import { GlobalData } from "@/lib/dto/global-data.dto";
+import { useI18n } from "@/lib/i18n/context";
 
 import {
   ChartsGrid,
@@ -50,13 +51,18 @@ export default function DashboardView({
   countryOptions,
   metricLabel,
 }: DashboardViewProps) {
+  const { t } = useI18n();
+
   return (
     <DashboardPageWrapper>
       <Hero>
-        <HeroTitle>Global Health Snapshot</HeroTitle>
+        <HeroTitle>{t("dashboardViews", "overview.title", "Global Health Snapshot")}</HeroTitle>
         <HeroText>
-          Analyze global and regional indicators with server-driven filtering, cached fetches,
-          and lightweight interactive charts.
+          {t(
+            "dashboardViews",
+            "overview.text",
+            "Analyze global and regional indicators with server-driven filtering, cached fetches, and lightweight interactive charts.",
+          )}
         </HeroText>
       </Hero>
 

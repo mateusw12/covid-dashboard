@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useI18n } from "@/lib/i18n/context";
 
 import { ToggleButton } from "./theme-toggle.styles";
 
@@ -25,11 +26,16 @@ function getInitialTheme(): Theme {
 }
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>(getInitialTheme);
+  const { t } = useI18n();
+  const [theme, setTheme] = useState<Theme>("light");
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    applyTheme(theme);
-  }, [theme]);
+    const initialTheme = getInitialTheme();
+    setTheme(initialTheme);
+    applyTheme(initialTheme);
+    setIsReady(true);
+  }, []);
 
   const handleToggleTheme = () => {
     const nextTheme = theme === "dark" ? "light" : "dark";
@@ -39,8 +45,16 @@ export default function ThemeToggle() {
   };
 
   return (
-    <ToggleButton type="button" onClick={handleToggleTheme} aria-label="Toggle theme">
-      {theme === "dark" ? "Light Mode" : "Dark Mode"}
+    <ToggleButton
+      type="button"
+      onClick={handleToggleTheme}
+      aria-label={t("dashboardLayout", "theme.toggleAria", "Toggle theme")}
+    >
+      {!isReady
+        ? t("dashboardLayout", "theme.loading", "Theme")
+        : theme === "dark"
+          ? t("dashboardLayout", "theme.lightMode", "Light Mode")
+          : t("dashboardLayout", "theme.darkMode", "Dark Mode")}
     </ToggleButton>
   );
 }

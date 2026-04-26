@@ -5,6 +5,7 @@ import { formatCompactNumber } from "@/lib/utils";
 import DateRangeFilter from "@/app/dashboard/components/date-range/date-range-filter";
 import { IntervalType } from "@/lib/enum/interval-type.enum";
 import TableExportButton from "@/app/dashboard/components/table/table-export-button";
+import { useI18n } from "@/lib/i18n/context";
 
 import {
   Hero,
@@ -47,11 +48,19 @@ export default function CountriesDashboardView({
   endDate,
   resolvedInterval,
 }: CountriesDashboardViewProps) {
+  const { t } = useI18n();
+
   return (
     <PageWrapper>
       <Hero>
-        <HeroTitle>Countries</HeroTitle>
-        <HeroText>Detailed ranking of countries and comparative metric distribution.</HeroText>
+        <HeroTitle>{t("dashboardViews", "countries.title", "Countries")}</HeroTitle>
+        <HeroText>
+          {t(
+            "dashboardViews",
+            "countries.text",
+            "Detailed ranking of countries and comparative metric distribution.",
+          )}
+        </HeroText>
       </Hero>
 
       <DateRangeFilter
@@ -65,7 +74,9 @@ export default function CountriesDashboardView({
 
       <Panel>
         <PanelHeader>
-          <PanelTitle>Top Countries Table</PanelTitle>
+          <PanelTitle>
+            {t("dashboardViews", "countries.tableTitle", "Top Countries Table")}
+          </PanelTitle>
           <TableExportButton
             rows={rows.map((row) => ({
               country: row.country,
@@ -80,10 +91,10 @@ export default function CountriesDashboardView({
           <Table>
             <thead>
               <tr>
-                <th>Country</th>
-                <th>Continent</th>
-                <th>Metric</th>
-                <th>Population</th>
+                <th>{t("dashboardViews", "countries.table.country", "Country")}</th>
+                <th>{t("dashboardViews", "countries.table.continent", "Continent")}</th>
+                <th>{t("dashboardViews", "countries.table.metric", "Metric")}</th>
+                <th>{t("dashboardViews", "countries.table.population", "Population")}</th>
               </tr>
             </thead>
             <tbody>

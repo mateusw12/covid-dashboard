@@ -31,6 +31,23 @@ export const Brand = styled.div`
   margin-bottom: 1.15rem;
 `;
 
+export const BrandHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+`;
+
+export const BrandLogo = styled.div`
+  width: 44px;
+  height: 44px;
+  border-radius: 0.7rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 82%, var(--bg));
+  display: grid;
+  place-items: center;
+`;
+
 export const BrandTitle = styled.h1`
   margin: 0;
   font-size: 1.35rem;
@@ -80,10 +97,26 @@ export const Topbar = styled.header`
   z-index: 6;
 `;
 
-export const Breadcrumb = styled.p`
+export const TopbarBrand = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+`;
+
+export const TopbarLogo = styled.div`
+  width: 32px;
+  height: 32px;
+  border-radius: 0.55rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 82%, var(--bg));
+`;
+
+export const TopbarTitle = styled.p`
   margin: 0;
-  font-size: 0.85rem;
-  color: var(--text-muted);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text);
 `;
 
 export const Content = styled.main`

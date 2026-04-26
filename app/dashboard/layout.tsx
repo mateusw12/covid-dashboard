@@ -1,12 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import ThemeToggle from "@/app/dashboard/components/theme-toggle/theme-toggle";
 
 import {
   Brand,
+  BrandHeader,
+  BrandLogo,
   BrandSubtitle,
   BrandTitle,
-  Breadcrumb,
   Content,
   DashboardShell,
   MainArea,
@@ -15,6 +17,9 @@ import {
   Nav,
   NavLink,
   Sidebar,
+  TopbarBrand,
+  TopbarLogo,
+  TopbarTitle,
   Topbar,
 } from "./dashboard-layout.styles";
 
@@ -25,7 +30,18 @@ export default function DashboardLayout({
     <DashboardShell>
       <Sidebar>
         <Brand>
-          <BrandTitle>CoviScope</BrandTitle>
+          <BrandHeader>
+            <BrandLogo>
+              <Image
+                src="/logo/covid-19.png"
+                alt="CoviScope logo"
+                width={44}
+                height={44}
+                priority
+              />
+            </BrandLogo>
+            <BrandTitle>CoviScope</BrandTitle>
+          </BrandHeader>
           <BrandSubtitle>Visualize the impact. Understand the data.</BrandSubtitle>
         </Brand>
         <Nav>
@@ -38,7 +54,18 @@ export default function DashboardLayout({
 
       <MainArea>
         <Topbar>
-          <Breadcrumb>Home / Dashboard</Breadcrumb>
+          <TopbarBrand>
+            <TopbarLogo>
+              <Image
+                src="/logo/covid-19.png"
+                alt="CoviScope logo"
+                width={32}
+                height={32}
+                priority
+              />
+            </TopbarLogo>
+            <TopbarTitle>CoviScope</TopbarTitle>
+          </TopbarBrand>
           <ThemeToggle />
         </Topbar>
         <Content>{children}</Content>

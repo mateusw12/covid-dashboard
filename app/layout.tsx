@@ -15,6 +15,11 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "CoviScope | Global Health Dashboard",
   description: "Visual dashboard for global COVID-19 metrics using Next.js 16 and React 19.",
+  icons: {
+    icon: "/logo/covid-19.png",
+    shortcut: "/logo/covid-19.png",
+    apple: "/logo/covid-19.png",
+  },
 };
 
 export default function RootLayout({

@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { IntervalType } from "@/lib/dto/dashboard-filters.dto";
+import { IntervalType } from "@/lib/enum/interval-type.enum";
 import { CovidService } from "@/lib/services/covid.service";
 
 function toInterval(value: string | null): IntervalType {
-  if (value === "yesterday" || value === "twoDaysAgo") {
-    return value;
+  if (value === IntervalType.Yesterday || value === IntervalType.TwoDaysAgo) {
+    return value as IntervalType;
   }
 
-  return "today";
+  return IntervalType.Today;
 }
 
 export async function GET(request: NextRequest) {

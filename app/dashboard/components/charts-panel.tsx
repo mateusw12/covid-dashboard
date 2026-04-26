@@ -1,0 +1,52 @@
+"use client";
+
+import dynamic from "next/dynamic";
+
+import ChartFallback from "@/app/dashboard/components/chart-fallback";
+
+const LineChart = dynamic(() => import("./line-chart"), {
+  ssr: false,
+  loading: () => <ChartFallback />,
+});
+
+const BarChart = dynamic(() => import("./bar-chart"), {
+  ssr: false,
+  loading: () => <ChartFallback />,
+});
+
+const ContinentMap = dynamic(() => import("./continent-map"), {
+  ssr: false,
+  loading: () => <ChartFallback />,
+});
+
+interface TrendItem {
+  label: string;
+  value: number;
+}
+
+interface ValueItem {
+  name: string;
+  value: number;
+}
+
+interface ChartsPanelProps {
+  trendData: TrendItem[];
+  topCountries: ValueItem[];
+  continentDistribution: ValueItem[];
+  metricLabel: string;
+}
+
+export default function ChartsPanel({
+  trendData,
+  topCountries,
+  continentDistribution,
+  metricLabel,
+}: ChartsPanelProps) {
+  return (
+    <>
+      <LineChart data={trendData} metricLabel={metricLabel} />
+      <BarChart data={topCountries} metricLabel={metricLabel} />
+      <ContinentMap data={continentDistribution} metricLabel={metricLabel} />
+    </>
+  );
+}

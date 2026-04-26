@@ -118,6 +118,7 @@ export default function LanguageSwitcher() {
             width={28}
             height={20}
             sizes="(max-width: 768px) 24px, 28px"
+            unoptimized
           />
         </TriggerFlag>
       </Trigger>
@@ -140,6 +141,8 @@ export default function LanguageSwitcher() {
                   width={28}
                   height={20}
                   sizes="(max-width: 768px) 24px, 28px"
+                  loading="lazy"
+                  unoptimized
                 />
               </MenuFlag>
             </MenuItem>

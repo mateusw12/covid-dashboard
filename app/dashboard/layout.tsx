@@ -90,7 +90,6 @@ export default function DashboardLayout({
                 width={32}
                 height={32}
                 sizes="32px"
-                priority
               />
             </TopbarLogo>
             <TopbarTitle>{t("dashboardLayout", "topbar.title", "CoviScope")}</TopbarTitle>

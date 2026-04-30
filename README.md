@@ -2,6 +2,8 @@
 
 Dashboard de monitoramento COVID-19 com Next.js App Router, filtros por intervalo/data, i18n e visualizações interativas.
 
+Link: https://covid-dashboard-pink.vercel.app/pt-BR/dashboard
+
 ## Stack
 
 - Next.js 16 + React 19
